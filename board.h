@@ -8,83 +8,129 @@
 #include "piece.h"
 using namespace std;
 
-class tile{
-public:
-    piece* unit;
-    int x, y;
-
-    tile();
-
-    tile(int x, int y){
-        this->x = x;
-        this->y = y;
-        this->unit = nullptr;
-    }
-    
-    void update(piece* p){
-        this->unit = p;
-    }
-    
-};
-
 class board {
 public:
-    tile tiles[8][8];
+    piece* black[16];
+    piece* white[16];
+    bool bCheck, wCheck, b_sCastle, b_lCastle, w_sCastle, w_lCastle;
 
     board(){
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                tiles[i][j] = tile(i, j);
+        bCheck = false;
+        wCheck = false;
+        b_sCastle = true;
+        b_lCastle = true;
+        w_sCastle = true;
+        w_lCastle = true;
+    }
+
+    board(const board &origin){
+        bCheck = origin.bCheck;
+        wCheck = origin.wCheck;
+        b_sCastle = origin.b_sCastle;
+        b_lCastle = origin.b_lCastle;
+        w_sCastle = origin.w_sCastle;
+        w_lCastle = origin.w_lCastle;
+
+        for(int i = 0; i < 16; i++){
+            if(origin.white[i]->isAlive){
+                char type = origin.white[i]->type;
+                int x = origin.white[i]->x;
+                int y = origin.white[i]->y;
+
+                this->white[i] = new piece(type, 1, x, y);
+            }
+
+            if(origin.black[i]->isAlive){
+                char type = origin.black[i]->type;
+                int x = origin.black[i]->x;
+                int y = origin.black[i]->y;
+
+                this->black[i] = new piece(type, -1, x, y);
             }
         }
     }
 
-    void update(string move){
-        
+    ~board(){
+        for(int i = 0; i < 16; i++){
+            if(black[i] != nullptr){
+                delete black[i];
+            }
+
+            if (white[i] != nullptr) {
+                delete white[i];
+            }
+        }
+    }
+
+    void update(string move, int color){
+        char piece = move[0];
+        int ySource = move[1] - 'a';
+        int xSource = (move[2] - '0' - 8 ) * -1;
+        char mode = move[3];
+        char piece2 = move[4];
+        int yDestination = move[5] - 'a';
+        int xDestination = (move[6] - '0' - 8 ) * -1;
+
+        if(color == 1){
+            for(int i = 0; i < 16; i++){
+                if(white[i]->type == piece && white[i]->x == xSource && white[i]->y == ySource){
+                    if(mode == '-'){
+                        white[i]->update(true, xDestination, yDestination);
+                    }else if (mode == 'x'){
+                        white[i]->update(true, xDestination, yDestination);
+                        for(int j = 0; j < 16; j++){
+                            if(black[j]->type == piece2 && black[j]->x == xDestination && black[j]->y == yDestination){
+                                black[j]->update(false, xDestination, yDestination);
+                            }
+                        }
+                    }
+                    //castle needs to be implemented
+                    //en passant needs to be implemented too
+                    break;
+                }
+            }
+        }else{
+            for(int i = 0; i < 16; i++){
+                if(black[i]->type == piece && black[i]->x == xSource && black[i]->y == ySource){
+                    if(mode == '-'){
+                        black[i]->update(true, xDestination, yDestination);
+                    }else if (mode == 'x'){
+                        black[i]->update(true, xDestination, yDestination);
+                        for(int j = 0; j < 16; j++){
+                            if(white[j]->type == piece2 && white[j]->x == xDestination && white[j]->y == yDestination){
+                                white[j]->update(false, xDestination, yDestination);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     void initialize(){
         for(int y = 0; y < 8; y++){
-            piece *whitePawn = new piece('p', 1, 6, y);
-            piece *blackPawn = new piece('p', -1, 1, y);
-
-            tiles[6][y].update(whitePawn);
-            tiles[1][y].update(blackPawn);
+            white[y] = new piece('p', 1, 6, y);
+            black[y] = new piece('p', -1, 1, y);
         }
 
-        piece *whiteRook = new piece('R', 1, 7, 0);
-        piece *blackRook = new piece('R', -1, 0, 0);
-        piece *whiteKnight = new piece('N', 1, 7, 1);
-        piece *blackKnight = new piece('N', -1, 0, 1);
-        piece *whiteBishop = new piece('B', 1, 7, 2);
-        piece *blackBishop = new piece('B', -1, 0, 2);
-        piece *whiteQueen = new piece('Q', 1, 7, 3);
-        piece *blackQueen = new piece('Q', -1, 0, 3);
-        piece *whiteKing = new piece('K', 1, 7, 4);
-        piece *blackKing = new piece('K', -1, 0, 4);
-        piece *whiteBishop2 = new piece('B', 1, 7, 5);
-        piece *blackBishop2 = new piece('B', -1, 0, 5);
-        piece *whiteKnight2 = new piece('N', 1, 7, 6);
-        piece *blackKnight2 = new piece('N', -1, 0, 6);
-        piece *whiteRook2 = new piece('R', 1, 7, 7);
-        piece *blackRook2 = new piece('R', -1, 0, 7);
+        white[8] = new piece('R', 1, 7, 0);
+        white[9] = new piece('N', 1, 7, 1);
+        white[10] = new piece('B', 1, 7, 2);
+        white[11] = new piece('Q', 1, 7, 3);
+        white[12] = new piece('K', 1, 7, 4);
+        white[13] = new piece('B', 1, 7, 5);
+        white[14] = new piece('N', 1, 7, 6);
+        white[15] = new piece('R', 1, 7, 7);
 
-        tiles[7][0].update(whiteRook);
-        tiles[0][0].update(blackRook);
-        tiles[7][1].update(whiteKnight);
-        tiles[0][1].update(blackKnight);
-        tiles[7][2].update(whiteBishop);
-        tiles[0][2].update(blackBishop);
-        tiles[7][3].update(whiteQueen);
-        tiles[0][3].update(blackQueen);
-        tiles[7][4].update(whiteKing);
-        tiles[0][4].update(blackKing);
-        tiles[7][5].update(whiteBishop2);
-        tiles[0][5].update(blackBishop2);
-        tiles[7][6].update(whiteKnight2);
-        tiles[0][6].update(blackKnight2);
-        tiles[7][7].update(whiteRook2);
-        tiles[0][7].update(blackRook2);
+        black[8] = new piece('R', -1, 0, 0);
+        black[9] = new piece('N', -1, 0, 1);
+        black[10] = new piece('B', -1, 0, 2);
+        black[11] = new piece('Q', -1, 0, 3);
+        black[12] = new piece('K', -1, 0, 4);
+        black[13] = new piece('B', -1, 0, 5);
+        black[14] = new piece('N', -1, 0, 6);
+        black[15] = new piece('R', -1, 0, 7);
     }
 
     void initialize(string position){
@@ -92,17 +138,10 @@ public:
     }
 
     list <string> possibleMoves(int color){
-        list <string> legalMoves;
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                char piece = tiles[i][j].unit->type;
-                int unitColor = tiles[i][j].unit->color;
+        list <string> moves;
 
-                if(color == unitColor){
 
-                }
-            }
-        }
+        return moves;
     }
 
 

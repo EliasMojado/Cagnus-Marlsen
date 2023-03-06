@@ -20,14 +20,13 @@ public:
         board.initialize(position);
     }
 
-    
-
     int positionEvaluator(){
-
+        //the hardest part
     }
 
-    void move(string move){
-        board.update(move);
+    void move(string move, int color){
+        board.update(move, color);
+        //also implement to make that node the new root of the tree
     }
     
 };
