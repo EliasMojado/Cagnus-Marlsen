@@ -20,6 +20,10 @@ public:
         board.initialize(position);
     }
 
+    void start(){
+        
+    }
+
     int positionEvaluator(){
         //the hardest part
     }

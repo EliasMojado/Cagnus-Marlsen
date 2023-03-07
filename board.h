@@ -231,6 +231,7 @@ public:
                         }else if (color + left->color == 0){
                             moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
                             "x" + to_string(left->type) + to_string('a' + tempY) + to_string('8' - x));
+                            break;
                         }
                     }
                 }
@@ -250,6 +251,7 @@ public:
                         }else if (color + right->color == 0){
                             moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
                             "x" + to_string(right->type) + to_string('a' + tempY) + to_string('8' - x));
+                            break;
                         }
                     }
                 }
@@ -269,6 +271,7 @@ public:
                         }else if (color + up->color == 0){
                             moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
                             "x" + to_string(up->type) + to_string('a' + y) + to_string('8' - tempX));
+                            break;
                         }
                     }
                 }
@@ -288,6 +291,7 @@ public:
                         }else if (color + down->color == 0){
                             moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
                             "x" + to_string(down->type) + to_string('a' + y) + to_string('8' - tempX));
+                            break;
                         }
                     }
                 }
@@ -400,6 +404,245 @@ public:
                     }
                 }
             }else if (type == 'B'){
+                int tempY = y;
+                int tempX = x;
+
+                //traverse upper right
+                while(tempX > 0 && tempY < 7){
+                    tempX--;
+                    tempY++;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "B" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+
+                //traverse lower right
+                tempY = y;
+                tempX = x;
+                while(tempX < 7 && tempY < 7){
+                    tempX++;
+                    tempY++;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "B" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+
+                //traverse upper left
+                tempX = x;
+                tempY = y;
+                while(tempX > 0 && tempY > 0){
+                    tempX--;
+                    tempY--;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "B" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+
+                //traverse lower left
+                tempX = x;
+                tempY = y;
+                while(tempX < 7 && tempY > 0){
+                    tempX++;
+                    tempY--;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "B" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("B" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+            }else if (type == 'Q'){
+                int tempY = y;
+                int tempX = x;
+
+                //traverse upper right
+                while(tempX > 0 && tempY < 7){
+                    tempX--;
+                    tempY++;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "Q" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+
+                //traverse lower right
+                tempY = y;
+                tempX = x;
+                while(tempX < 7 && tempY < 7){
+                    tempX++;
+                    tempY++;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "Q" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+
+                //traverse upper left
+                tempX = x;
+                tempY = y;
+                while(tempX > 0 && tempY > 0){
+                    tempX--;
+                    tempY--;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "Q" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+
+                //traverse lower left
+                tempX = x;
+                tempY = y;
+                while(tempX < 7 && tempY > 0){
+                    tempX++;
+                    tempY--;
+                    piece* temp = tiles[tempX][tempY].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "Q" + to_string('a' + tempY) + to_string('8' - tempX));
+                    }else if (temp->color + color != 0){
+                        break;
+                    }else if (temp->color + color == 0){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                        "x" + to_string(temp->type) + to_string('a' + tempY) + to_string('8' - tempX));
+                        break;
+                    }
+                }
+                
+                //traverse left
+                tempY = y;
+                while(tempY > 0){
+                    tempY--;
+                    piece* left;
+                    left = tiles[x][tempY].tilePiece;
+                    if(left == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "Q" + to_string('a' + tempY) + to_string('8'- x));
+                    }else if(left != nullptr){
+                        if(color + left->color != 0){
+                            break;
+                        }else if (color + left->color == 0){
+                            moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(left->type) + to_string('a' + tempY) + to_string('8' - x));
+                            break;
+                        }
+                    }
+                }
+
+                //traverse to the right
+                tempY = y;
+                while(tempY < 7){
+                    tempY++;
+                    piece* right;
+                    right = tiles[x][tempY].tilePiece;
+                    if(right == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "Q" + to_string('a' + tempY) + to_string('8'- x));
+                    }else if(right != nullptr){
+                        if(color + right->color != 0){
+                            break;
+                        }else if (color + right->color == 0){
+                            moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(right->type) + to_string('a' + tempY) + to_string('8' - x));
+                            break;
+                        }
+                    }
+                }
+                
+                //traverse up
+                tempX = x;
+                while(tempX > 0){
+                    tempX--;
+                    piece* up;
+                    up = tiles[tempX][y].tilePiece;
+                    if(up == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "Q" + to_string('a' + y) + to_string('8'- tempX));
+                    }else if(up != nullptr){
+                        if(color + up->color != 0){
+                            break;
+                        }else if (color + up->color == 0){
+                            moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(up->type) + to_string('a' + y) + to_string('8' - tempX));
+                            break;
+                        }
+                    }
+                }
+
+                //traverse down
+                tempX = x;
+                while(tempX < 7){
+                    tempX++;
+                    piece* down;
+                    down = tiles[tempX][y].tilePiece;
+                    if(down == nullptr){
+                        moves.push_back("Q" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "Q" + to_string('a' + y) + to_string('8'- tempX));
+                    }else if(down != nullptr){
+                        if(color + down->color != 0){
+                            break;
+                        }else if (color + down->color == 0){
+                            moves.push_back("Q" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(down->type) + to_string('a' + y) + to_string('8' - tempX));
+                            break;
+                        }
+                    }
+                }
+            }else if (type == 'K'){
+                //castle
+
+                //long castle
+
+                //regular moves
                 
             }
         }
