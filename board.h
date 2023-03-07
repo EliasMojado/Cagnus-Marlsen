@@ -214,12 +214,194 @@ public:
                 }
                 
                 // en passant
+
             }else if (type == 'R'){
+                //traverse to the left
+                int tempY = y;
+                while(tempY > 0){
+                    tempY--;
+                    piece* left;
+                    left = tiles[x][tempY].tilePiece;
+                    if(left == nullptr){
+                        moves.push_back("R" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "R" + to_string('a' + tempY) + to_string('8'- x));
+                    }else if(left != nullptr){
+                        if(color + left->color != 0){
+                            break;
+                        }else if (color + left->color == 0){
+                            moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(left->type) + to_string('a' + tempY) + to_string('8' - x));
+                        }
+                    }
+                }
+
+                //traverse to the right
+                tempY = y;
+                while(tempY < 7){
+                    tempY++;
+                    piece* right;
+                    right = tiles[x][tempY].tilePiece;
+                    if(right == nullptr){
+                        moves.push_back("R" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "R" + to_string('a' + tempY) + to_string('8'- x));
+                    }else if(right != nullptr){
+                        if(color + right->color != 0){
+                            break;
+                        }else if (color + right->color == 0){
+                            moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(right->type) + to_string('a' + tempY) + to_string('8' - x));
+                        }
+                    }
+                }
                 
+                //traverse up
+                int tempX = x;
+                while(tempX > 0){
+                    tempX--;
+                    piece* up;
+                    up = tiles[tempX][y].tilePiece;
+                    if(up == nullptr){
+                        moves.push_back("R" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "R" + to_string('a' + y) + to_string('8'- tempX));
+                    }else if(up != nullptr){
+                        if(color + up->color != 0){
+                            break;
+                        }else if (color + up->color == 0){
+                            moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(up->type) + to_string('a' + y) + to_string('8' - tempX));
+                        }
+                    }
+                }
+
+                //traverse down
+                tempX = x;
+                while(tempX < 7){
+                    tempX++;
+                    piece* down;
+                    down = tiles[tempX][y].tilePiece;
+                    if(down == nullptr){
+                        moves.push_back("R" + to_string('a' + y) + to_string('8'- x) + "-"
+                        + "R" + to_string('a' + y) + to_string('8'- tempX));
+                    }else if(down != nullptr){
+                        if(color + down->color != 0){
+                            break;
+                        }else if (color + down->color == 0){
+                            moves.push_back("R" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(down->type) + to_string('a' + y) + to_string('8' - tempX));
+                        }
+                    }
+                }
+            }else if (type == 'N'){
+                piece* temp;
+
+                if(x > 1 && y > 0){
+                    temp = tiles[x-2][y-1].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y - 1) + to_string('8' - x + 2));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y - 1) + to_string('8' - x + 2));
+                        }
+                    }
+                }
+
+                if(x > 0 && y > 1){
+                    temp = tiles[x-1][y-2].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y - 2) + to_string('8' - x + 1));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("K" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y - 2) + to_string('8' - x + 1));
+                        }
+                    }
+                }
+
+                if(x < 7 && y > 1){
+                    temp = tiles[x + 1][y-2].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y - 2) + to_string('8' - x - 1));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y - 2) + to_string('8' - x - 1));
+                        }
+                    }
+                }
+
+                if(x < 6 && y > 0){
+                    temp = tiles[x+2][y-1].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y - 1) + to_string('8' - x - 2));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y - 1) + to_string('8' - x - 2));
+                        }
+                    }
+                }
+
+                //
+
+                if(x > 1 && y < 7){
+                    temp = tiles[x-2][y+1].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y + 1) + to_string('8' - x + 2));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y + 1) + to_string('8' - x + 2));
+                        }
+                    }
+                }
+
+                if(x > 0 && y < 6){
+                    temp = tiles[x-1][y+2].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y + 2) + to_string('8' - x + 1));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("K" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y + 2) + to_string('8' - x + 1));
+                        }
+                    }
+                }
+
+                if(x < 7 && y < 6){
+                    temp = tiles[x + 1][y+2].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y + 2) + to_string('8' - x - 1));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y + 2) + to_string('8' - x - 1));
+                        }
+                    }
+                }
+
+                if(x < 6 && y < 7){
+                    temp = tiles[x+2][y+1].tilePiece;
+                    if(temp == nullptr){
+                        moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                        "-" + "N" + to_string('a' + y + 1) + to_string('8' - x - 2));
+                    }else if (temp != nullptr){
+                        if(color + temp->color == 0){
+                            moves.push_back("N" + to_string('a' + y) + to_string('8' - x) +
+                            "x" + to_string(temp->type) + to_string('a' + y + 1) + to_string('8' - x - 2));
+                        }
+                    }
+                }
+            }else if (type == 'B'){
                 
             }
-
-
         }
 
         return moves;
