@@ -143,7 +143,182 @@ int positionEvaluator(board &board_state){
 
             bScore -= possible_moves * moves;
         } else if (type == 'N' && black->isAlive == true){
+            int possible_moves = 0;
+            piece* temp;
 
+            if(x > 1 && y > 0){
+                possible_moves++;
+                temp = board_state.tiles[x-2][y-1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x > 0 && y > 1){
+                possible_moves++;
+                temp = board_state.tiles[x-1][y-2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x < 7 && y > 1){
+                possible_moves++;
+                temp = board_state.tiles[x + 1][y-2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x < 6 && y > 0){
+                possible_moves++;
+                temp = board_state.tiles[x+2][y-1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x > 1 && y < 7){
+                possible_moves++;
+                temp = board_state.tiles[x-2][y+1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x > 0 && y < 6){
+                possible_moves++;
+                temp = board_state.tiles[x-1][y+2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x < 7 && y < 6){
+                possible_moves++;
+                temp = board_state.tiles[x + 1][y+2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            if(x < 6 && y < 7){
+                possible_moves++;
+                temp = board_state.tiles[x+2][y+1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == 1){
+                        bScore -= attacking;
+                    }else{
+                        bScore -= defending;
+                    }
+                }
+            }
+
+            bScore -= possible_moves * moves;
+        }else if ((type == 'Q' || type == 'B') && black->isAlive == true){
+            int possible_moves = 0;
+            int tempY = y;
+            int tempX = x;
+
+             //traverse upper right
+            while(tempX > 0 && tempY < 7){
+                tempX--;
+                tempY++;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == -1){
+                    bScore -= defending;
+                    break;
+                }else if (temp->color == 1){
+                    bScore -= attacking;
+                    break;
+                }
+            }
+
+            //traverse lower right
+            tempY = y;
+            tempX = x;
+            while(tempX < 7 && tempY < 7){
+                tempX++;
+                tempY++;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == -1){
+                    bScore -= defending;
+                    break;
+                }else if (temp->color == 1){
+                    bScore -= attacking;
+                    break;
+                }
+            }
+
+            //traverse upper left
+            tempX = x;
+            tempY = y;
+            while(tempX > 0 && tempY > 0){
+                tempX--;
+                tempY--;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == -1){
+                    bScore -= defending;
+                    break;
+                }else if (temp->color == 1){
+                    bScore -= attacking;
+                    break;
+                }
+            }
+
+            //traverse lower left
+            tempX = x;
+            tempY = y;
+            while(tempX < 7 && tempY > 0){
+                tempX++;
+                tempY--;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == -1){
+                    bScore -= defending;
+                    break;
+                }else if (temp->color == 1){
+                    bScore -= attacking;
+                    break;
+                }
+            }
+
+            bScore -= possible_moves * moves;
         }
     }
 
@@ -270,6 +445,183 @@ int positionEvaluator(board &board_state){
                         wScore -= attacking;
                         break;
                     }
+                }
+            }
+
+            wScore += possible_moves * moves;
+        }else if (type == 'N' && white->isAlive == true){
+            int possible_moves = 0;
+            piece* temp;
+
+            if(x > 1 && y > 0){
+                possible_moves++;
+                temp = board_state.tiles[x-2][y-1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x > 0 && y > 1){
+                possible_moves++;
+                temp = board_state.tiles[x-1][y-2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x < 7 && y > 1){
+                possible_moves++;
+                temp = board_state.tiles[x + 1][y-2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x < 6 && y > 0){
+                possible_moves++;
+                temp = board_state.tiles[x+2][y-1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x > 1 && y < 7){
+                possible_moves++;
+                temp = board_state.tiles[x-2][y+1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x > 0 && y < 6){
+                possible_moves++;
+                temp = board_state.tiles[x-1][y+2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x < 7 && y < 6){
+                possible_moves++;
+                temp = board_state.tiles[x + 1][y+2].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            if(x < 6 && y < 7){
+                possible_moves++;
+                temp = board_state.tiles[x+2][y+1].tilePiece;
+                if(temp != nullptr){
+                    if(temp->color == -1){
+                        wScore += attacking;
+                    }else{
+                        wScore += defending;
+                    }
+                }
+            }
+
+            wScore += possible_moves * moves;
+        }else if ((type == 'Q' || type == 'B') && white->isAlive == true){
+            int possible_moves = 0;
+            int tempY = y;
+            int tempX = x;
+
+             //traverse upper right
+            while(tempX > 0 && tempY < 7){
+                tempX--;
+                tempY++;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == 1){
+                    wScore += defending;
+                    break;
+                }else if (temp->color == -1){
+                    wScore += attacking;
+                    break;
+                }
+            }
+
+            //traverse lower right
+            tempY = y;
+            tempX = x;
+            while(tempX < 7 && tempY < 7){
+                tempX++;
+                tempY++;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == 1){
+                    wScore += defending;
+                    break;
+                }else if (temp->color == -1){
+                    wScore += attacking;
+                    break;
+                }
+            }
+
+            //traverse upper left
+            tempX = x;
+            tempY = y;
+            while(tempX > 0 && tempY > 0){
+                tempX--;
+                tempY--;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == 1){
+                    wScore += defending;
+                    break;
+                }else if (temp->color == -1){
+                    wScore += attacking;
+                    break;
+                }
+            }
+
+            //traverse lower left
+            tempX = x;
+            tempY = y;
+            while(tempX < 7 && tempY > 0){
+                tempX++;
+                tempY--;
+                piece* temp = board_state.tiles[tempX][tempY].tilePiece;
+                if(temp == nullptr){
+                    possible_moves++;
+                }else if (temp->color == 1){
+                    wScore += defending;
+                    break;
+                }else if (temp->color == -1){
+                    wScore += attacking;
+                    break;
                 }
             }
 

@@ -22,7 +22,13 @@ public:
     }
 
     void start(){
-        cout << positionEvaluator(board) << endl;
+        cout << "initial position: " << positionEvaluator(board) << endl;
+
+        board.update("pe2-pe4", 1);
+        cout << "after e4: " << positionEvaluator(board) << endl;
+        
+        board.update("pe7-pe5", -1);
+        cout << "after e5: " << positionEvaluator(board) << endl;
     }
 
     void move(string move, int color){
