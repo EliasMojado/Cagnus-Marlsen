@@ -5,12 +5,13 @@
 #include <string>
 #include <list>
 #include "board.h"
+#include "positionEvaluator.cpp"
+
 using namespace std;
 
 class game {
-private:
-    board board;
 public:
+    board board;
     game(){
         board.initialize();
         //initialize the board i guess
@@ -21,11 +22,7 @@ public:
     }
 
     void start(){
-        
-    }
-
-    int positionEvaluator(){
-        //the hardest part
+        cout << positionEvaluator(board) << endl;
     }
 
     void move(string move, int color){
