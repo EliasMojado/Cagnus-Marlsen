@@ -11,7 +11,14 @@ using namespace std;
 int positionEvaluator(board &board_state){
     int bScore = 0;
     int wScore = 0;
- 
+    
+    //constants
+    int defending = 5;
+    int attacking = 5;
+    int moves = 5;
+
+    /*BLACK PIECES*/
+
     for(int i = 0; i < 16; i++){
         piece* black = board_state.black[i];
         char type = black->type;
@@ -60,7 +67,7 @@ int positionEvaluator(board &board_state){
             if(isPassedPawn){
                 bScore -= 50;
             }
-        }else if (type == 'R' && black->isAlive == true){
+        }else if ((type == 'R'|| type == 'Q')&& black->isAlive == true){
             int possible_moves = 0;
             int tempY = y;
             int tempX = x;
@@ -72,10 +79,10 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if (left != nullptr){
                     if(black->color + left->color != 0){
-                        bScore += left->value / 20; 
+                        bScore -= defending; 
                         break;
                     }else if(black->color + left->color == 0){
-                        bScore -= left->value / 20;
+                        bScore -= attacking;
                         break;
                     }
                 }
@@ -90,10 +97,10 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if(right != nullptr){
                     if(black->color + right->color != 0){
-                        bScore += right->value/20;
+                        bScore -= defending;
                         break;
                     }else if (black->color + right->color == 0){
-                        bScore -= right ->value/20;
+                        bScore -= attacking;
                         break;
                     }
                 }
@@ -107,10 +114,10 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if(up != nullptr){
                     if(black->color + up->color != 0){
-                        bScore += up->value/20;
+                        bScore -= defending;
                         break;
                     }else if (black->color + up->color == 0){
-                        bScore -= up->value/20;
+                        bScore -= attacking;
                         break;
                     }
                 }
@@ -125,18 +132,22 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if(down != nullptr){
                     if(black->color + down->color != 0){
-                        bScore += down->value/20;
+                        bScore -= defending;
                         break;
                     }else if (black->color + down->color == 0){
-                        bScore -= down->value/20;
+                        bScore -= attacking;
                         break;
                     }
                 }
             }
 
-            bScore -= possible_moves * 5;
+            bScore -= possible_moves * moves;
+        } else if (type == 'N' && black->isAlive == true){
+
         }
     }
+
+    /*WHITE PIECES*/
 
     for(int i = 0; i < 16; i++){
         piece* white = board_state.white[i];
@@ -182,11 +193,13 @@ int positionEvaluator(board &board_state){
                     }
                 }
             }
+
+            //if pawn is connected
             
             if(isPassedPawn){
                 wScore += 50;
             }
-        }else if (type == 'R' && white->isAlive == true){
+        }else if ((type == 'R'|| type == 'Q') && white->isAlive == true){
             int possible_moves = 0;
             int tempY = y;
             int tempX = x;
@@ -198,10 +211,10 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if (left != nullptr){
                     if(white->color + left->color != 0){
-                        wScore += left->value / 20; 
+                        wScore += defending; 
                         break;
                     }else if(white->color + left->color == 0){
-                        wScore -= left->value / 20;
+                        wScore -= attacking;
                         break;
                     }
                 }
@@ -216,10 +229,10 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if(right != nullptr){
                     if(white->color + right->color != 0){
-                        wScore += right->value/20;
+                        wScore += defending;
                         break;
                     }else if (white->color + right->color == 0){
-                        wScore -= right ->value/20;
+                        wScore -= attacking;
                         break;
                     }
                 }
@@ -233,10 +246,10 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if(up != nullptr){
                     if(white->color + up->color != 0){
-                        wScore += up->value/20;
+                        wScore += defending;
                         break;
                     }else if (white->color + up->color == 0){
-                        wScore -= up->value/20;
+                        wScore -= attacking;
                         break;
                     }
                 }
@@ -251,16 +264,16 @@ int positionEvaluator(board &board_state){
                     possible_moves++;
                 }else if(down != nullptr){
                     if(white->color + down->color != 0){
-                        wScore += down->value/20;
+                        wScore += defending;
                         break;
                     }else if (white->color + down->color == 0){
-                        wScore -= down->value/20;
+                        wScore -= attacking;
                         break;
                     }
                 }
             }
 
-            wScore += possible_moves * 5;
+            wScore += possible_moves * moves;
         }
     }
 
