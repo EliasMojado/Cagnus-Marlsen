@@ -27,8 +27,17 @@ public:
         board.update("pe2-pe4", 1);
         cout << "after e4: " << positionEvaluator(board) << endl;
         
-        board.update("pe7-pe5", -1);
+        board.update("pd7-pd5", -1);
         cout << "after e5: " << positionEvaluator(board) << endl;
+
+        board.update("pe4xpd5", 1);
+        cout << "after pxd5: " << positionEvaluator(board) << endl;
+
+        board.update("Qd8xpd5", -1);
+        cout << "after Qxd5: " << positionEvaluator(board) << endl;
+
+        board.update("Ng1-Nf3", 1);
+        cout << "after Nf3: " << positionEvaluator(board) << endl;
     }
 
     void move(string move, int color){
