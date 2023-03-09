@@ -15,11 +15,9 @@ public:
     tile tiles[8][8];
     piece* black[16];
     piece* white[16];
-    bool bCheck, wCheck, b_sCastle, b_lCastle, w_sCastle, w_lCastle;
+    bool b_sCastle, b_lCastle, w_sCastle, w_lCastle;
 
     board(){
-        bCheck = false;
-        wCheck = false;
         b_sCastle = true;
         b_lCastle = true;
         w_sCastle = true;
@@ -27,8 +25,6 @@ public:
     }
 
     board(const board &origin){
-        bCheck = origin.bCheck;
-        wCheck = origin.wCheck;
         b_sCastle = origin.b_sCastle;
         b_lCastle = origin.b_lCastle;
         w_sCastle = origin.w_sCastle;
@@ -55,6 +51,10 @@ public:
         }
     }
 
+    board(int position){
+
+    }
+
     ~board(){
         for(int i = 0; i < 16; i++){
             if(black[i] != nullptr){
@@ -67,7 +67,7 @@ public:
         }
     }
 
-    void update(string move, int color){
+    void update(string move){
         char piece1 = move[0];
         int ySource = move[1] - 'a';
         int xSource = (move[2] - '0' - 8 ) * -1;

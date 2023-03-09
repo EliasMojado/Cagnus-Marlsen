@@ -13,9 +13,9 @@ int positionEvaluator(board &board_state){
     int wScore = 0;
     
     //constants
-    int defending = 5;
-    int attacking = 5;
-    int moves = 5;
+    int defending = 3;
+    int attacking = 3;
+    int moves = 7;
 
     /*BLACK PIECES*/
 
@@ -34,7 +34,7 @@ int positionEvaluator(board &board_state){
 
             //center pawns are more valuable
             if(y == 4 || y == 3){
-                bScore -= 30 + (x-1)*10;
+                bScore -= 30 + (x-1)*15;
             }else if (y == 5 || y == 2){
                 bScore -= 20 + (x-1)*10;
             }else{
