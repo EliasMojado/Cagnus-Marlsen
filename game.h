@@ -28,16 +28,12 @@ public:
         cout << "after e4: " << positionEvaluator(board) << endl;
         
         board.update("pd7-pd5", -1);
-        cout << "after e5: " << positionEvaluator(board) << endl;
+        cout << "after d5: " << positionEvaluator(board) << endl;
 
-        board.update("pe4xpd5", 1);
-        cout << "after pxd5: " << positionEvaluator(board) << endl;
-
-        board.update("Qd8xpd5", -1);
-        cout << "after Qxd5: " << positionEvaluator(board) << endl;
-
-        board.update("Ng1-Nf3", 1);
-        cout << "after Nf3: " << positionEvaluator(board) << endl;
+        list<string> moves = board.possibleMoves(1);
+        for(auto it = moves.begin(); it != moves.end(); ++it){
+            cout << *it << endl;
+        }
     }
 
     void move(string move, int color){

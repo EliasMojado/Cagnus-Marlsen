@@ -655,16 +655,14 @@ public:
                 //regular moves
                 for(int i = x-1; i <= x + 1; i++){
                     for(int j = y-1; j <= y + 1; j++){
-                        if(i != x && j != y){
-                            if(i >= 0 && i <= 7 && j >= 0 && j <= 7){
-                                piece* temp = tiles[i][j].tilePiece;
-                                if(temp == nullptr){
-                                    moves.push_back("K" + string(1,'a' + y) + string(1,'8' - x) + "-"
-                                    + "K" + string(1,'a' + j) + string(1,'8' - i));
-                                }else if(color + temp->color == 0){
-                                    moves.push_back("K" + string(1,'a' + y) + string(1,'8' - x) + "x"
-                                    + temp->type + string(1,'a' + j) + string(1,'8' - i));
-                                }
+                        if(i >= 0 && i <= 7 && j >= 0 && j <= 7){
+                            piece* temp = tiles[i][j].tilePiece;
+                            if(temp == nullptr){
+                                moves.push_back("K" + string(1,'a' + y) + string(1,'8' - x) + "-"
+                                + "K" + string(1,'a' + j) + string(1,'8' - i));
+                            }else if(color + temp->color == 0){
+                                moves.push_back("K" + string(1,'a' + y) + string(1,'8' - x) + "x"
+                                + temp->type + string(1,'a' + j) + string(1,'8' - i));
                             }
                         }
                     }
