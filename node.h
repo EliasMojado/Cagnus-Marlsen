@@ -13,6 +13,7 @@ using namespace std;
 class node{
 public:
     int color;
+    string move;
     int position_strength;
     int deep_position_strength;
     board* node_board;
@@ -26,6 +27,7 @@ public:
     }
 
     node(board &mother_board, string move, int color, node* parent){
+        this->move = move;
         this->parent = parent;
         this->color = color;
         node_board = new board(mother_board);
@@ -44,9 +46,29 @@ public:
             }
         }else{
             for(auto it = children.begin(); it != children.end(); ++it){
-                (*it)->expand();
+                if(*it != nullptr){
+                    (*it)->expand();
+                }
             }
         }
+    }
+
+    void kill(){
+        node* parent = this->parent;
+        
+        if(parent != nullptr){
+            for(auto it = parent->children.begin(); it != parent->children.end(); ++it){
+                if(*it == this){
+                    parent->children.erase(it);
+                }
+            }
+        }
+
+        for(auto it = children.begin(); it != children.end(); ++it){
+            (*it)->kill();
+        }
+
+        delete this;
     }
 };
 
