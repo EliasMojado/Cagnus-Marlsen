@@ -11,8 +11,8 @@ int main() {
     chess.start();
     auto end = high_resolution_clock::now();
 
-    auto duration = duration_cast<nanoseconds>(end - start);
-    cout << "Time taken: " << duration.count() << " nanoseconds" << endl;
+    auto duration = duration_cast<milliseconds>(end - start);
+    cout << "Time taken: " << duration.count() << " milliseconds" << endl;
 
     int x;
     cin >> x;

@@ -150,6 +150,11 @@ public:
 
     list <string> possibleMoves(int color){
         list <string> moves;
+
+        if(black[12]->isAlive == false || white[12] ->isAlive == false){
+            return moves;
+        }
+
         for(int i = 0; i < 16; i++){
             char type;
             int x, y;

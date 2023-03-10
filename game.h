@@ -18,7 +18,7 @@ public:
     
     game(){
         board.initialize();
-        game_tree = new tree(board, 4);
+        game_tree = new tree(board, 4, 6, 0.5);
     }
 
     game (string position){
