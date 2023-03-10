@@ -1,3 +1,6 @@
+#ifndef POSITIONEVAL_H
+#define POSITIONEVAL_H
+
 #include <iostream>
 #include <string>
 #include <list>
@@ -21,14 +24,20 @@ int positionEvaluator(board &board_state){
 
     for(int i = 0; i < 16; i++){
         piece* black = board_state.black[i];
-        char type = black->type;
-        int x = black->x;
-        int y = black ->y;
+        char type;
+        int x;
+        int y;
+
+        if(black->isAlive == true){
+            char type = black->type;
+            int x = black->x;
+            int y = black ->y;
+        }
 
         //raw piece value
         bScore += black->value;
         
-        if(type == 'p'  && black->isAlive == true){
+        if(type == 'p' && black->isAlive == true){
             //if a pawn is advanced
             bScore -= pow(x-1, 3);
 
@@ -633,3 +642,5 @@ int positionEvaluator(board &board_state){
 
     return bScore + wScore;
 }
+
+#endif

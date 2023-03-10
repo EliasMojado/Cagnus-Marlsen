@@ -6,7 +6,7 @@
 #include <list>
 
 #include "board.h"
-#include "positionEvaluator.cpp"
+#include "positionEvaluator.h"
 
 using namespace std;
 
@@ -21,7 +21,8 @@ public:
     list <node*> children;
     
     node(){
-
+        parent = nullptr;
+        node_board = nullptr;
     }
 
     node(board &mother_board, string move, int color, node* parent){
@@ -33,10 +34,18 @@ public:
     }
 
     void expand(){
-        list <string> moves = node_board->possibleMoves(color * -1);
-        for(auto it = moves.begin(); it != moves.end(); ++it){
-            node* child_node = new node(*node_board, *it, color * -1, this);
-            children.push_back(child_node);
+        int i = 0;
+        if(children.size() == 0){
+            list <string> moves = node_board->possibleMoves(color * -1);
+            for(auto it = moves.begin(); it != moves.end(); ++it){
+                i++;
+                node* child_node = new node(*node_board, *it, color * -1, this);
+                children.push_back(child_node);
+            }
+        }else{
+            for(auto it = children.begin(); it != children.end(); ++it){
+                (*it)->expand();
+            }
         }
     }
 };

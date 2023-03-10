@@ -38,6 +38,8 @@ public:
 
                 this->white[i] = new piece(type, 1, x, y);
                 this->tiles[x][y].update(this->white[i]);
+            }else{
+                this->white[i] = new piece();
             }
 
             if(origin.black[i]->isAlive){
@@ -47,6 +49,8 @@ public:
 
                 this->black[i] = new piece(type, -1, x, y);
                 this->tiles[x][y].update(this->black[i]);
+            }else{
+                this->black[i] = new piece();
             }
         }
     }
@@ -68,6 +72,10 @@ public:
     }
 
     void update(string move){
+        if(move.empty()){
+            return;
+        }
+
         char piece1 = move[0];
         int ySource = move[1] - 'a';
         int xSource = (move[2] - '0' - 8 ) * -1;
@@ -145,7 +153,7 @@ public:
         for(int i = 0; i < 16; i++){
             char type;
             int x, y;
-
+            
             if(color == 1){
                 type = white[i]->type;
                 x = white[i]->x;
