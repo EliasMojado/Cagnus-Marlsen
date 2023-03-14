@@ -16,9 +16,9 @@ int positionEvaluator(board &board_state){
     int wScore = 0;
     
     //constants
-    int defending = 3;
-    int attacking = 3;
-    int moves = 7;
+    int defending = 5;
+    int attacking = 5;
+    int moves = 3;
 
     /*BLACK PIECES*/
 
@@ -398,7 +398,7 @@ int positionEvaluator(board &board_state){
                         wScore += defending; 
                         break;
                     }else if(white->color + left->color == 0){
-                        wScore -= attacking;
+                        wScore += attacking;
                         break;
                     }
                 }
@@ -416,7 +416,7 @@ int positionEvaluator(board &board_state){
                         wScore += defending;
                         break;
                     }else if (white->color + right->color == 0){
-                        wScore -= attacking;
+                        wScore += attacking;
                         break;
                     }
                 }
@@ -433,7 +433,7 @@ int positionEvaluator(board &board_state){
                         wScore += defending;
                         break;
                     }else if (white->color + up->color == 0){
-                        wScore -= attacking;
+                        wScore += attacking;
                         break;
                     }
                 }
@@ -451,7 +451,7 @@ int positionEvaluator(board &board_state){
                         wScore += defending;
                         break;
                     }else if (white->color + down->color == 0){
-                        wScore -= attacking;
+                        wScore += attacking;
                         break;
                     }
                 }

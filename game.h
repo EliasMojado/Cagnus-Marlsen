@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <vector>
+#include <stdlib.h>
+#include <algorithm>
 
 #include "board.h"
 #include "positionEvaluator.h"
@@ -11,29 +14,64 @@
 
 using namespace std;
 
+struct boardmove{
+    string move;
+    int strength;
+};
+
+bool cmpStrength(boardmove a, boardmove b){
+    return a.strength > b.strength;
+}
+
 class game {
 public:
-    tree *game_tree;
-    board board;
+    board motherboard;
+    vector <boardmove> topMoves;
     
     game(){
-        board.initialize();
-        game_tree = new tree(board, 4, 6, 0.5);
+        motherboard.initialize();
     }
 
     game (string position){
-        board.initialize(position);
+        motherboard.initialize(position);
     }
 
     void start(){
-        game_tree->start();
+        string move;
+        bool hasMoved = true;
+        while(true){
+            if(hasMoved){
+                cout << "thinking..." << endl;
+                list <string> moves = motherboard.possibleMoves(motherboard.turn * -1);
+                for(auto it = moves.begin(); it != moves.end(); ++it){
+                    board possibleBoard = board(motherboard);
+                    possibleBoard.update(*it);
+                    tree* possibleTree = new tree(possibleBoard, 2);
+                    int strength = possibleTree->run();
+                    delete possibleTree;
+
+                    boardmove newmove = {*it, strength};
+                    topMoves.push_back(newmove);
+                }
+
+                sort(topMoves.begin(), topMoves.end(), cmpStrength);
+
+                for (const auto& m : topMoves) {
+                    cout << m.move << " " << m.strength << endl;
+                }
+
+                hasMoved = false;
+            }else{
+                cout << "your move: " << endl;
+                cin >> move;
+                motherboard.update(move);
+                topMoves.clear();
+                hasMoved = true;
+                system("CLS");
+            }
+        }
     }
 
-    void move(string move){
-        board.update(move);
-        //also implement to make that node the new root of the tree
-    }
-    
 };
 
 #endif

@@ -16,6 +16,7 @@ public:
     piece* black[16];
     piece* white[16];
     bool b_sCastle, b_lCastle, w_sCastle, w_lCastle;
+    int turn;
 
     board(){
         b_sCastle = true;
@@ -25,6 +26,7 @@ public:
     }
 
     board(const board &origin){
+        turn = origin.turn;
         b_sCastle = origin.b_sCastle;
         b_lCastle = origin.b_lCastle;
         w_sCastle = origin.w_sCastle;
@@ -76,6 +78,8 @@ public:
             return;
         }
 
+        turn = turn * -1;
+
         char piece1 = move[0];
         int ySource = move[1] - 'a';
         int xSource = (move[2] - '0' - 8 ) * -1;
@@ -101,6 +105,8 @@ public:
     }
 
     void initialize(){
+        turn = -1;
+
         for(int y = 0; y < 8; y++){
             white[y] = new piece('p', 1, 6, y);
             tiles[6][y].update(white[y]);
@@ -182,8 +188,10 @@ public:
                         + "p" + string(1,'a' + y) + string(1,'8' - x + 1));
 
                         if(x == 6){
-                            moves.push_back("p" + string(1,'a' + y) + string(1,'8' - x) + "-" 
-                            + "p" + string(1,'a' + y) + string(1,'8' - x + 2));
+                            if(tiles[x-2][y].tilePiece == nullptr){
+                                moves.push_back("p" + string(1,'a' + y) + string(1,'8' - x) + "-" 
+                                + "p" + string(1,'a' + y) + string(1,'8' - x + 2));
+                            }
                         }
                     }
                 }else{
@@ -193,8 +201,10 @@ public:
                         + "p" + string(1,'a' + y) + string(1,'8' - x - 1));
 
                         if(x == 1){
-                            moves.push_back("p" + string(1,'a' + y) + string(1,'8' - x) + "-" 
-                            + "p" + string(1,'a' + y) + string(1,'8' - x - 2));
+                            if(tiles[x+2][y].tilePiece == nullptr){
+                                moves.push_back("p" + string(1,'a' + y) + string(1,'8' - x) + "-" 
+                                + "p" + string(1,'a' + y) + string(1,'8' - x - 2));
+                            }
                         }
                     }
                 }
